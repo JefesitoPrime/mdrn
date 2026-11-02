@@ -1,0 +1,19 @@
+{
+  "name": "mdrn-co-web",
+  "version": "1.0.0",
+  "description": "Sitio corporativo de MDRN & CO. con formulario de consultas y panel de administración",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "hash": "node generar-hash.js"
+  },
+  "keywords": [],
+  "author": "Santiago González",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "express": "^5.3.0",
+    "mysql2": "^3.24.6"
+  }
+}

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de administración | MDRN & CO.</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <header class="admin-encabezado">
+    <div class="admin-barra">
+      <img src="img/logo.png" alt="MDRN & CO." width="110" height="31">
+      <span class="admin-titulo">Consultas recibidas</span>
+      <div class="admin-usuario">
+        <span id="saludo"></span>
+        <button type="button" id="btnSalir" class="btn-salir">Cerrar sesión</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="admin-contenido">
+    <section class="resumen" aria-label="Resumen">
+      <div class="dato"><strong id="totalGeneral">0</strong><span>Mostradas</span></div>
+      <div class="dato dato-azul"><strong id="totalNoLeidas">0</strong><span>No leídas</span></div>
+      <div class="dato dato-cian"><strong id="totalLeidas">0</strong><span>Leídas</span></div>
+    </section>
+
+    <section class="filtros" aria-label="Filtros">
+      <div class="filtro">
+        <label for="filtroEstado">Estado</label>
+        <select id="filtroEstado">
+          <option value="">Todas</option>
+          <option value="noleidas">No leídas</option>
+          <option value="leidas">Leídas</option>
+        </select>
+      </div>
+      <div class="filtro">
+        <label for="filtroFecha">Fecha</label>
+        <input type="date" id="filtroFecha">
+      </div>
+      <div class="filtro filtro-ancho">
+        <label for="filtroBusqueda">Buscar por nombre o email</label>
+        <input type="search" id="filtroBusqueda" placeholder="Ej: laura o @ejemplo.com" maxlength="100">
+      </div>
+      <button type="button" id="btnLimpiar" class="btn-secundario">Limpiar filtros</button>
+    </section>
+
+    <div id="mensajeLista" class="mensaje-lista" role="status" aria-live="polite"></div>
+
+    <div class="tabla-caja">
+      <table class="tabla">
+        <thead>
+          <tr><th>Nombre</th><th>Email</th><th>Asunto</th><th>Fecha</th><th>Estado</th></tr>
+        </thead>
+        <tbody id="cuerpoTabla"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- Detalle de una consulta -->
+  <div id="modal" class="modal" hidden>
+    <div class="modal-fondo" id="modalFondo"></div>
+    <div class="modal-caja" role="dialog" aria-modal="true" aria-labelledby="detAsunto">
+      <button type="button" class="modal-cerrar" id="btnCerrarModal" aria-label="Cerrar">&times;</button>
+      <h2 id="detAsunto"></h2>
+      <p class="det-estado" id="detEstado"></p>
+      <dl class="det-lista">
+        <dt>Nombre</dt><dd id="detNombre"></dd>
+        <dt>Email</dt><dd id="detEmail"></dd>
+        <dt>Teléfono</dt><dd id="detTelefono"></dd>
+        <dt>Servicio de interés</dt><dd id="detServicio"></dd>
+        <dt>Fecha</dt><dd id="detFecha"></dd>
+      </dl>
+      <h3>Mensaje</h3>
+      <p class="det-mensaje" id="detMensaje"></p>
+      <div id="detError" class="aviso-error" role="alert"></div>
+      <div class="modal-acciones">
+        <button type="button" id="btnToggleLeida" class="btn-principal"></button>
+        <button type="button" id="btnCerrarModal2" class="btn-secundario">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>

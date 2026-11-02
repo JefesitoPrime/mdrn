@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MDRN & CO. | Llevamos internet donde nadie más se anima a llegar</title>
+  <meta name="description" content="MDRN & CO. diseña, instala y mantiene infraestructura de redes y conectividad en zonas alejadas: satélite, radioenlaces, redes cableadas y Wi-Fi.">
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- ============ NAVEGACIÓN ============ -->
+  <header class="encabezado">
+    <div class="contenedor barra">
+      <a href="#inicio" class="marca" aria-label="MDRN & CO. - Inicio">
+        <img src="img/logo.png" alt="MDRN & CO." width="120" height="34">
+      </a>
+      <button class="btn-menu" id="btnMenu" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu">
+        <span></span><span></span><span></span>
+      </button>
+      <nav id="menu" class="menu" aria-label="Principal">
+        <a href="#inicio">Inicio</a>
+        <a href="#nosotros">Nosotros</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#proceso">Cómo trabajamos</a>
+        <a href="#contacto" class="btn btn-cian btn-chico">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ INICIO ============ -->
+    <section id="inicio" class="hero">
+      <div class="contenedor hero-contenido">
+        <img src="img/logo.png" alt="MDRN & CO." class="hero-logo" width="420" height="120">
+        <h1>Llevamos internet donde nadie más se anima a llegar</h1>
+        <p class="hero-texto">
+          MDRN &amp; CO. es una empresa de asistencia informática especializada en diseñar, instalar y mantener
+          infraestructura de redes y conectividad para campos, plantas industriales, obras, explotaciones mineras,
+          parques eólicos, depósitos logísticos y estaciones de investigación.
+        </p>
+        <div class="hero-botones">
+          <a href="#contacto" class="btn btn-cian">Pedir una consulta</a>
+          <a href="#servicios" class="btn btn-borde">Ver servicios</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ NOSOTROS ============ -->
+    <section id="nosotros" class="seccion">
+      <div class="contenedor">
+        <h2 class="titulo">Nosotros</h2>
+        <p class="subtitulo">Conectamos empresas con el mundo digital, incluso cuando su ubicación representa una dificultad.</p>
+
+        <div class="grilla dos">
+          <article class="tarjeta tarjeta-azul">
+            <h3>Misión</h3>
+            <p>Llevar conectividad confiable a establecimientos ubicados en zonas donde la infraestructura convencional
+              no llega, para que la organización pueda operar con la misma eficiencia que en un entorno urbano.</p>
+          </article>
+          <article class="tarjeta tarjeta-purpura">
+            <h3>Visión</h3>
+            <p>Que cualquier empresa u organización pueda estar conectada con el mundo digital, sin importar la distancia,
+              el terreno o la falta de infraestructura previa.</p>
+          </article>
+        </div>
+
+        <h3 class="subtitulo-seccion">Valores</h3>
+        <p class="nota">Cada letra de MDRN representa un pilar de la empresa.</p>
+        <div class="grilla cuatro">
+          <article class="valor"><span class="letra">M</span><h4>Modernidad</h4><p>Tecnología actual elegida según cada proyecto.</p></article>
+          <article class="valor"><span class="letra">D</span><h4>Datos</h4><p>Información que circula de forma segura y ordenada.</p></article>
+          <article class="valor"><span class="letra">R</span><h4>Redes</h4><p>Elementos conectados entre sí para compartir información.</p></article>
+          <article class="valor"><span class="letra">N</span><h4>Nexo</h4><p>El vínculo que une a cada cliente con el mundo digital.</p></article>
+        </div>
+
+        <h3 class="subtitulo-seccion">Nuestro equipo</h3>
+        <div class="grilla equipo">
+          <article class="persona">
+            <span class="avatar" aria-hidden="true">SG</span>
+            <h4>Santiago González</h4><p class="cargo">CEO &amp; Fundador</p>
+            <p>Lidera la visión estratégica y técnica, define la tecnología de cada proyecto y supervisa cada etapa.</p>
+          </article>
+          <article class="persona">
+            <span class="avatar" aria-hidden="true">MR</span>
+            <h4>Martina Rios</h4><p class="cargo">Jefa de Operaciones de Campo</p>
+            <p>Coordina los relevamientos en terreno y analiza distancias, obstáculos y condiciones del lugar.</p>
+          </article>
+          <article class="persona">
+            <span class="avatar" aria-hidden="true">FA</span>
+            <h4>Facundo Aranda</h4><p class="cargo">Ingeniero de Redes</p>
+            <p>Diseña el esquema de red: routers, switches, Wi-Fi y cableado, estable y escalable.</p>
+          </article>
+          <article class="persona">
+            <span class="avatar" aria-hidden="true">CF</span>
+            <h4>Camila Fuentes</h4><p class="cargo">Técnica en Instalaciones</p>
+            <p>Está al frente de la instalación física de antenas, cableado y puntos de acceso.</p>
+          </article>
+          <article class="persona">
+            <span class="avatar" aria-hidden="true">NP</span>
+            <h4>Nicolás Peralta</h4><p class="cargo">Soporte y Mantenimiento</p>
+            <p>Monitorea la conectividad, resuelve fallas y actualiza el equipamiento.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SERVICIOS (vienen de MySQL) ============ -->
+    <section id="servicios" class="seccion seccion-gris">
+      <div class="contenedor">
+        <h2 class="titulo">Servicios</h2>
+        <p class="subtitulo">Elegimos la tecnología según la distancia y el terreno de cada proyecto.</p>
+        <div id="listaServicios" class="grilla servicios" aria-live="polite">
+          <p class="nota">Cargando servicios...</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CÓMO TRABAJAMOS ============ -->
+    <section id="proceso" class="seccion">
+      <div class="contenedor">
+        <h2 class="titulo">Cómo trabajamos</h2>
+        <p class="subtitulo">Desde el enlace principal hasta el último dispositivo conectado.</p>
+        <ol class="pasos">
+          <li><span class="num">1</span><div><h4>Relevamiento</h4><p>Análisis de la ubicación, distancias, obstáculos y necesidades de la empresa.</p></div></li>
+          <li><span class="num">2</span><div><h4>Diseño</h4><p>Definimos la tecnología más conveniente y el esquema general de la red.</p></div></li>
+          <li><span class="num">3</span><div><h4>Implementación</h4><p>Instalación de antenas, cableado, routers, switches y puntos de acceso.</p></div></li>
+          <li><span class="num">4</span><div><h4>Mantenimiento</h4><p>Asistencia gratuita los primeros meses, mensualidad accesible después y garantía frente a fallas de cableado.</p></div></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ CONTACTO ============ -->
+    <section id="contacto" class="seccion seccion-oscura">
+      <div class="contenedor">
+        <h2 class="titulo titulo-claro">Contacto</h2>
+        <p class="subtitulo subtitulo-claro">Contanos qué necesitás y te respondemos a la brevedad.</p>
+
+        <div class="contacto-grilla">
+          <div class="contacto-datos">
+            <h3>Hablemos de tu proyecto</h3>
+            <ul>
+              <li><strong>WhatsApp / Teléfono</strong><a href="tel:+5492964499033">+54 9 2964 49-90 33</a></li>
+              <li><strong>Email</strong><a href="mailto:medranobusiness@icloud.com">medranobusiness@icloud.com</a></li>
+              <li><strong>Soluciones tecnológicas</strong><span>a medida para tu negocio</span></li>
+            </ul>
+          </div>
+
+          <form id="formConsulta" class="formulario" novalidate>
+            <div class="campo">
+              <label for="nombre">Nombre *</label>
+              <input type="text" id="nombre" name="nombre" maxlength="100" autocomplete="name" required>
+              <small class="error" id="error-nombre"></small>
+            </div>
+            <div class="campo">
+              <label for="email">Email *</label>
+              <input type="email" id="email" name="email" maxlength="120" autocomplete="email" required>
+              <small class="error" id="error-email"></small>
+            </div>
+            <div class="campo">
+              <label for="telefono">Teléfono (opcional)</label>
+              <input type="tel" id="telefono" name="telefono" maxlength="30" autocomplete="tel">
+              <small class="error" id="error-telefono"></small>
+            </div>
+            <div class="campo">
+              <label for="servicio_id">Servicio de interés (opcional)</label>
+              <select id="servicio_id" name="servicio_id">
+                <option value="">Sin especificar</option>
+              </select>
+            </div>
+            <div class="campo completo">
+              <label for="asunto">Asunto *</label>
+              <input type="text" id="asunto" name="asunto" maxlength="150" required>
+              <small class="error" id="error-asunto"></small>
+            </div>
+            <div class="campo completo">
+              <label for="mensaje">Mensaje * <span class="contador" id="contador">0 / 2000</span></label>
+              <textarea id="mensaje" name="mensaje" rows="5" maxlength="2000" required></textarea>
+              <small class="error" id="error-mensaje"></small>
+            </div>
+            <div class="campo completo">
+              <button type="submit" class="btn btn-cian" id="btnEnviar">Enviar consulta</button>
+              <div id="respuestaForm" class="respuesta" role="status" aria-live="polite"></div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pie">
+    <div class="contenedor pie-contenido">
+      <img src="img/logo.png" alt="MDRN & CO." width="90" height="26">
+      <p>&copy; 2026 MDRN &amp; CO. · Llevamos internet donde nadie más se anima a llegar</p>
+      <a href="admin-login.html" class="enlace-admin">Acceso administración</a>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
