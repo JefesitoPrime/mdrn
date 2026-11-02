@@ -1,9 +1,6 @@
--- =====================================================
 -- MDRN & CO. - Base de datos
--- Se puede ejecutar completo desde phpMyAdmin (pestaña "Importar"
--- o pestaña "SQL") o desde la consola de MySQL.
--- Usuario de prueba: admin / Mdrn2026!
--- =====================================================
+-- Usuario: admin / Mdrn2026!
+
 
 -- Asegura que los acentos y la ñ se guarden bien
 SET NAMES utf8mb4;
@@ -14,15 +11,12 @@ CREATE DATABASE IF NOT EXISTS mdrn_co
 
 USE mdrn_co;
 
--- Se borran las tablas en orden (primero la que depende de las otras)
+-- Se borran las tablas en orden
 DROP TABLE IF EXISTS consultas;
 DROP TABLE IF EXISTS servicios;
 DROP TABLE IF EXISTS administradores;
 
--- -----------------------------------------------------
 -- Tabla administradores (quienes entran al panel)
--- La contraseña se guarda con bcrypt, nunca en texto plano
--- -----------------------------------------------------
 CREATE TABLE administradores (
   id            INT UNSIGNED NOT NULL AUTO_INCREMENT,
   usuario       VARCHAR(50)  NOT NULL,
@@ -33,9 +27,7 @@ CREATE TABLE administradores (
   UNIQUE KEY uq_admin_usuario (usuario)
 ) ENGINE=InnoDB;
 
--- -----------------------------------------------------
--- Tabla servicios (se muestran en la web desde /api/servicios)
--- -----------------------------------------------------
+-- Tabla servicios 
 CREATE TABLE servicios (
   id          INT UNSIGNED NOT NULL AUTO_INCREMENT,
   nombre      VARCHAR(100) NOT NULL,
@@ -46,11 +38,7 @@ CREATE TABLE servicios (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
--- -----------------------------------------------------
--- Tabla consultas (lo que envían los visitantes)
--- servicio_id: servicio de interés (opcional)
--- leida_por:   administrador que la marcó como leída
--- -----------------------------------------------------
+-- Tabla consultas
 CREATE TABLE consultas (
   id          INT UNSIGNED NOT NULL AUTO_INCREMENT,
   nombre      VARCHAR(100) NOT NULL,
@@ -73,15 +61,11 @@ CREATE TABLE consultas (
     ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
--- =====================================================
--- DATOS INICIALES
--- =====================================================
-
--- Contraseña: Mdrn2026!  (hash bcrypt)
+-- Contraseña: Mdrn2026!
 INSERT INTO administradores (usuario, password_hash, nombre) VALUES
 ('admin', '$2b$10$LdaqZsZ7XDd54zAJRuPpUuWfCIKq.cAyUGLc3Z4iBistfiwuu7obG', 'Santiago González');
 
--- Precios en "Consultar": el documento de la empresa no define precios
+-- Precios en "Consultar"
 INSERT INTO servicios (nombre, descripcion, icono, precio, orden) VALUES
 ('Conectividad satelital',
  'Internet para zonas donde casi no hay infraestructura de comunicaciones cerca: campos, minas, obras y estaciones de investigación.',
@@ -98,18 +82,3 @@ INSERT INTO servicios (nombre, descripcion, icono, precio, orden) VALUES
 ('Mantenimiento y asistencia técnica',
  'Soporte continuo una vez instalada la red: monitoreo, resolución de fallas y actualización de equipamiento. Incluye garantía de instalación.',
  'soporte', 'Consultar', 5);
-
--- Consultas de ejemplo para probar el panel
-INSERT INTO consultas (nombre, email, telefono, asunto, mensaje, servicio_id, leida, fecha) VALUES
-('Laura Benítez', 'laura.benitez@ejemplo.com', '+54 9 2964 11-2233',
- 'Internet para un campo',
- 'Hola, tenemos un campo a 80 km del pueblo y no hay señal de ningún tipo. Necesitamos internet para oficina y cámaras. ¿Pueden hacer un relevamiento?',
- 1, 0, DATE_SUB(NOW(), INTERVAL 1 DAY)),
-('Ramiro Soto', 'ramiro.soto@ejemplo.com', NULL,
- 'Presupuesto de red para depósito',
- 'Estamos armando un depósito logístico y necesitamos cableado, Wi-Fi y switches para unas 30 computadoras. Quedo atento al presupuesto.',
- 3, 1, DATE_SUB(NOW(), INTERVAL 3 DAY)),
-('Obras Patagonia S.A.', 'contacto@obraspatagonia.example', '+54 9 2964 55-8899',
- 'Enlace para obra en construcción',
- 'Tenemos una obra a 12 km de la ruta. Queremos saber si es viable un radioenlace y cuánto tiempo lleva la instalación.',
- 2, 0, NOW());
