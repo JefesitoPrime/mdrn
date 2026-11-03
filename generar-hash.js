@@ -1,5 +1,5 @@
 // Uso: npm run hash -- MiNuevaClave
-// Genera el hash bcrypt para guardar en la tabla administradores.
+// Genera el hash bcrypt para guardar en la tabla administradores
 const bcrypt = require('bcryptjs');
 const clave = process.argv[2];
 if (!clave) {
