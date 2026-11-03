@@ -1,6 +1,4 @@
-// =====================================================
-// MDRN & CO. - Servidor (Node.js + Express + MySQL)
-// =====================================================
+// MDRN & CO. - Servidor
 const express = require('express');
 const mysql = require('mysql2');
 const cors = require('cors');
@@ -11,7 +9,7 @@ const bcrypt = require('bcryptjs');
 const app = express();
 const PUERTO = process.env.PORT || 3000;
 
-// ---------- Configuración de la base de datos (XAMPP) ----------
+// Confi de la base de datos
 const CONFIG_DB = {
   host: process.env.DB_HOST || 'localhost',
   port: process.env.DB_PORT || 3306,
@@ -21,8 +19,7 @@ const CONFIG_DB = {
   dateStrings: true // las fechas llegan como texto "AAAA-MM-DD HH:MM:SS"
 };
 
-// ---------- Conexión a MySQL con createConnection (sin pool) ----------
-// Una sola conexión simple y directa. Si se cae, se vuelve a crear.
+//  Conexion a MySQL con createConnection 
 let db;
 let reconectando = false;
 
@@ -53,22 +50,21 @@ function conectar() {
 }
 conectar();
 
-// Ejecuta una consulta SQL parametrizada (los ? evitan inyección SQL)
+// Ejecuta una consulta SQL parametrizada
 function consultar(sql, parametros = []) {
   return new Promise((resolve, reject) => {
     db.execute(sql, parametros, (err, filas) => (err ? reject(err) : resolve(filas)));
   });
 }
 
-// ---------- Middlewares ----------
+// Middlewares
 app.use(cors());
 app.use(express.json({ limit: '20kb' }));
 app.use(express.static(path.join(__dirname, 'public'))); // sitio público
 
-// ---------- Sesiones del administrador ----------
-// Al iniciar sesión se crea un token aleatorio y se guarda en una cookie HttpOnly.
-const sesiones = new Map(); // token -> { id, usuario, nombre, expira }
-const DURACION_SESION = 2 * 60 * 60 * 1000; // 2 horas
+// Sesiones del administrador 
+const sesiones = new Map();
+const DURACION_SESION = 2 * 60 * 60 * 1000;
 
 function leerCookie(req, nombre) {
   const cookies = req.headers.cookie || '';
@@ -90,7 +86,6 @@ function obtenerSesion(req) {
   return sesion;
 }
 
-// Protege las rutas de la API: responde 401 si no hay sesión
 function requiereAuth(req, res, next) {
   const sesion = obtenerSesion(req);
   if (!sesion) return res.status(401).json({ error: 'No autorizado. Iniciá sesión.' });
@@ -98,7 +93,7 @@ function requiereAuth(req, res, next) {
   next();
 }
 
-// Límite simple de intentos de login (5 cada 15 minutos por IP)
+// Limite de intentos simple 5 de 15 min
 const intentos = new Map();
 function limiteLogin(req, res, next) {
   const ip = req.ip;
@@ -113,7 +108,7 @@ function limiteLogin(req, res, next) {
   next();
 }
 
-// Hash falso para que el tiempo de respuesta sea parecido aunque el usuario no exista
+//hash falso para simular un usuarioq no existe
 const HASH_FALSO = bcrypt.hashSync('no-existe', 10);
 
 // ---------- Validaciones ----------
@@ -148,11 +143,10 @@ function errorServidor(res, err) {
   res.status(500).json({ error: 'Error en el servidor o en la base de datos. Intentá de nuevo.' });
 }
 
-// =====================================================
-// API REST - PÚBLICA
-// =====================================================
 
-// Lista de servicios desde MySQL
+//PÚBLICA
+
+// Lista de servicios MySQL
 app.get('/api/servicios', async (req, res) => {
   try {
     const filas = await consultar(
@@ -164,7 +158,7 @@ app.get('/api/servicios', async (req, res) => {
   }
 });
 
-// Guardar una consulta del formulario
+// Guarda las consulta del formulario
 app.post('/api/consultas', async (req, res) => {
   const { errores, datos } = validarConsulta(req.body || {});
   if (errores.length > 0) return res.status(400).json({ error: errores[0], errores });
@@ -187,9 +181,7 @@ app.post('/api/consultas', async (req, res) => {
   }
 });
 
-// =====================================================
-// LOGIN / LOGOUT
-// =====================================================
+// loguearse - desloguears3e
 app.post('/api/login', limiteLogin, async (req, res) => {
   const usuario = String((req.body || {}).usuario || '').trim();
   const password = String((req.body || {}).password || '');
@@ -237,16 +229,16 @@ app.post('/api/logout', (req, res) => {
   res.json({ mensaje: 'Sesión cerrada' });
 });
 
-// Devuelve los datos del admin logueado (el panel lo usa para saludar)
+// Devuelve los datos del admin logueado
 app.get('/api/sesion', requiereAuth, (req, res) => {
   res.json({ usuario: req.admin.usuario, nombre: req.admin.nombre });
 });
 
-// =====================================================
-// API REST - PRIVADA (requiere sesión)
-// =====================================================
 
-// Listado con filtros: ?estado=leidas|noleidas &fecha=AAAA-MM-DD &q=texto
+// PRIVADA 
+
+
+// Listado con sus filtros
 app.get('/api/consultas', requiereAuth, async (req, res) => {
   const { estado, fecha, q } = req.query;
   const condiciones = [];
@@ -306,7 +298,7 @@ app.get('/api/consultas/:id', requiereAuth, async (req, res) => {
   }
 });
 
-// Marcar una consulta como leída / no leída
+// marca las consultas como leidas y no leidas
 app.put('/api/consultas/:id/leida', requiereAuth, async (req, res) => {
   const id = Number(req.params.id);
   if (!Number.isInteger(id) || id < 1) return res.status(400).json({ error: 'ID inválido.' });
@@ -326,16 +318,14 @@ app.put('/api/consultas/:id/leida', requiereAuth, async (req, res) => {
   }
 });
 
-// =====================================================
-// PÁGINA DEL PANEL (protegida desde el backend)
-// =====================================================
-// admin.html no está en /public: solo se entrega si hay sesión válida.
+
+// pagina del panel
 app.get('/admin', (req, res) => {
   if (!obtenerSesion(req)) return res.redirect('/admin-login.html');
   res.sendFile(path.join(__dirname, 'privado', 'admin.html'));
 });
 
-// ---------- Errores ----------
+// Errores 
 app.use('/api', (req, res) => res.status(404).json({ error: 'Ruta de la API no encontrada.' }));
 
 app.use((err, req, res, next) => {
